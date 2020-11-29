@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Button, Input, Select } from 'antd';
-import CharacterContext from '../pages/Characters/Context';
-import { charactersAPI } from '../api';
+import CharacterContext from '../../pages/Characters/Context';
+import { charactersAPI } from '../../api';
+
+import './styles.scss';
 
 const { Option } = Select;
 
@@ -26,7 +28,7 @@ const CharacterSearch: React.FC = () => {
   };
 
   return (
-    <>
+    <div id="character-search">
       <Input.Group>
         <Input
           style={{ width: '65%' }}
@@ -37,13 +39,15 @@ const CharacterSearch: React.FC = () => {
         />
 
         <Select
-          defaultValue="Alive"
+          defaultValue=""
           size="large"
+          className="select"
           style={{
             width: '25%',
           }}
           onChange={(value) => setStatus(value)}
         >
+          <Option value=""> Todos </Option>
           <Option value="Alive">Alive</Option>
           <Option value="Dead">Dead</Option>
           <Option value="unknown">unknown</Option>
@@ -52,8 +56,6 @@ const CharacterSearch: React.FC = () => {
         <Button
           style={{
             width: '10%',
-            position: 'relative',
-            bottom: '1px',
             borderTopLeftRadius: '0',
             borderBottomLeftRadius: '0',
           }}
@@ -64,7 +66,7 @@ const CharacterSearch: React.FC = () => {
           Search
         </Button>
       </Input.Group>
-    </>
+    </div>
   );
 };
 

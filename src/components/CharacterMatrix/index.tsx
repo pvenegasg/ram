@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Row } from 'antd';
 import { useContext } from 'react';
-import CharacterContext from '../pages/Characters/Context';
-import CharacterCard from './CharacterCard';
-import { charactersAPI } from '../api';
+import CharacterContext from '../../pages/Characters/Context';
+import CharacterCard from '../CharacterCard';
+import { charactersAPI } from '../../api';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+
+import './styles.scss';
 
 const CHARS_PER_PAGE = 9;
 const MAX_CHARS_FROM_API = 20;
@@ -63,10 +66,14 @@ const CharacterMatrix: React.FC = () => {
   );
 
   return (
-    <>
+    <div id="character-matrix">
       <div className="actions">
-        <Button onClick={previousPage}> Anterior </Button>
-        <Button onClick={nextPage}> Siguiente </Button>
+        <Button className="btn__prev" onClick={previousPage}>
+          <LeftOutlined />
+        </Button>
+        <Button className="btn__next" onClick={nextPage}>
+          <RightOutlined />
+        </Button>
       </div>
 
       <Row gutter={[20, 20]}>
@@ -76,7 +83,7 @@ const CharacterMatrix: React.FC = () => {
           </Col>
         ))}
       </Row>
-    </>
+    </div>
   );
 };
 

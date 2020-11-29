@@ -1,0 +1,19 @@
+#character-matrix {
+  .btn__prev, .btn__next {
+    position: fixed;
+    top: 50%;
+    height: auto;
+    font-size: 2rem;
+    color: #ffffff;
+    background-color: #1890ff;
+    z-index: 1;
+  }
+
+  .btn__prev {
+    left: 0;
+  }
+
+  .btn__next {
+    right: 0;
+  }
+}
