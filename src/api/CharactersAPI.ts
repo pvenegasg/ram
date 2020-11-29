@@ -4,39 +4,50 @@ import { Character } from '../types';
 export interface GetCharactersResponse {
   info: {
     count: number;
-    net: string;
+    next: string;
     pages: number;
     prev: string | null;
   };
   results: Character[];
-  id: 1;
-  name: 'Rick Sanchez';
-  status: 'Alive';
-  species: 'Human';
-  type: '';
-  gender: 'Male';
-  origin: {
-    name: 'Earth (C-137)';
-    url: 'https://rickandmortyapi.com/api/location/1';
-  };
-  location: {
-    name: 'Earth (Replacement Dimension)';
-    url: 'https://rickandmortyapi.com/api/location/20';
-  };
-  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg';
-  episode: [
-    'https://rickandmortyapi.com/api/episode/1',
-    'https://rickandmortyapi.com/api/episode/2'
-  ];
-  url: 'https://rickandmortyapi.com/api/character/1';
-  created: '2017-11-04T18:48:46.250Z';
+}
+
+interface GetByParameterParams {
+  name: string;
+  status: string;
+  [key: string]: string;
 }
 
 class CharactersAPI extends Request {
-  async getMany(page?: number): Promise<GetCharactersResponse> {
+  async getByPage(url = ''): Promise<GetCharactersResponse> {
+    const resource =
+      url.split('https://rickandmortyapi.com/api/character/')[1] || '';
+
     try {
       const response = await this.instance.get<GetCharactersResponse>(
-        `/character/?page=${page}`
+        `/character/${resource}`
+      );
+
+      return response.data;
+    } catch (err) {
+      throw 'Cannot get characters';
+    }
+  }
+
+  async getByParameters(
+    params: GetByParameterParams
+  ): Promise<GetCharactersResponse> {
+    const query = Object.keys(params)
+      .map((key) => {
+        if (params[key]) {
+          return key + '=' + params[key];
+        }
+      })
+      .filter((item) => item)
+      .join('&');
+
+    try {
+      const response = await this.instance.get<GetCharactersResponse>(
+        `/character/?${query}`
       );
 
       return response.data;

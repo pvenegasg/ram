@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { charactersAPI } from '../../api';
-import { Character } from '../../types';
-import CharacterCard from '../../components/CharacterCard';
-import { Button, Col, Row } from 'antd';
+import React, { useState } from 'react';
+import CharacterSearch from '../../components/CharacterSearch';
+import CharacterMatrix from '../../components/CharacterMatrix';
 
-import useCharacterLibrary from '../../composables/characterDirectory';
+import CharacterContext, { Pages } from './Context';
 
 import './styles.scss';
+import { Character } from '../../types';
 
 const CharactersPage: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const {
-    pagination,
-    characters,
-    nextPage,
-    previousPage,
-  } = useCharacterLibrary();
-  // const [characters, setCharacters] = useState<Character[]>([]);
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const [mode, setMode] = useState('default');
+  const [pages, setPages] = useState<Pages>({
+    next: null,
+    prev: null,
+  });
 
   return (
     <div id="characters__wrapper">
-      <h1> Rick and Morty!</h1>
+      <CharacterContext.Provider
+        value={{
+          characters,
+          setCharacters,
+          pages,
+          setPages,
+          setMode,
+          mode,
+        }}
+      >
+        <h1> Rick and Morty!</h1>
 
-      <div className="actions">
-        <Button onClick={previousPage}> Anterior </Button>
-        <Button onClick={nextPage}> Siguiente </Button>
-      </div>
-
-      <Row gutter={[20, 20]}>
-        {pagination.map((character, index) => (
-          <Col key={`character-${index}`} className="gutter-row" span={8}>
-            <CharacterCard key={`char-${index}`} data={character} />
-          </Col>
-        ))}
-      </Row>
+        <CharacterSearch />
+        <CharacterMatrix />
+      </CharacterContext.Provider>
     </div>
   );
 };
