@@ -1,0 +1,69 @@
+{
+  "name": "ram",
+  "version": "1.0.0",
+  "description": "A Rick and Morty frontend build with React",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pvenegasg/ram.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pvenegasg/ram/issues"
+  },
+  "homepage": "https://github.com/pvenegasg/ram#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "@babel/preset-typescript": "^7.12.7",
+    "@babel/runtime": "^7.12.5",
+    "@testing-library/dom": "^7.28.1",
+    "@testing-library/react": "^11.2.2",
+    "@types/node": "^14.14.10",
+    "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "axios": "^0.21.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "html-webpack-plugin": "^4.5.0",
+    "jest": "^26.6.3",
+    "node-sass": "^5.0.0",
+    "postcss-loader": "^4.1.0",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "typescript": "^4.1.2",
+    "webpack": "^5.8.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "antd": "^4.8.6"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/__tests__/setup.test.js"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "setup.test.js"
+    ]
+  }
+}
