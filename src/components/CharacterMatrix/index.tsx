@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Row } from 'antd';
 import { useContext } from 'react';
-import CharacterContext from '../../pages/Characters/Context';
+import CharacterContext from '../../pages/Characters/CharacterContext';
 import CharacterCard from '../CharacterCard';
 import { charactersAPI } from '../../api';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';

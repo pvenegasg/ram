@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { Form, Button, Input, Select } from 'antd';
-import CharacterContext from '../../pages/Characters/Context';
+import CharacterContext from '../../pages/Characters/CharacterContext';
 import { charactersAPI } from '../../api';
 
 import './styles.scss';

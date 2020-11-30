@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CharacterSearch from '../../components/CharacterSearch';
 import CharacterMatrix from '../../components/CharacterMatrix';
 
-import CharacterContext, { Pages } from './Context';
+import CharacterContext, { Pages } from './CharacterContext';
 
 import './styles.scss';
 import { Character } from '../../types';
