@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { Button, Input, Select } from 'antd';
+import React, { useContext } from 'react';
+import { Form, Button, Input, Select } from 'antd';
 import CharacterContext from '../../pages/Characters/Context';
 import { charactersAPI } from '../../api';
 
 import './styles.scss';
+import { useForm } from 'antd/lib/form/Form';
 
 const { Option } = Select;
 
@@ -12,14 +13,15 @@ type Props = {
 };
 
 const CharacterSearch: React.FC<Props> = ({ onSearch }) => {
+  const [form] = useForm();
+
   const { setCharacters, setPages } = useContext(CharacterContext);
-  const [name, setName] = useState('');
-  const [status, setStatus] = useState('');
 
   const handleSearch = async () => {
     onSearch(true);
 
     try {
+      const { name, status } = form.getFieldsValue();
       const response = await charactersAPI.getByParameters({
         name,
         status,
@@ -39,29 +41,42 @@ const CharacterSearch: React.FC<Props> = ({ onSearch }) => {
 
   return (
     <div id="character-search">
-      <Input.Group>
-        <Input
-          style={{ width: '65%' }}
-          size="large"
-          placeholder="Which character are you searching?"
-          value={name}
-          onChange={(evt) => setName(evt.currentTarget.value)}
-        />
+      <Form
+        className="form"
+        form={form}
+        name="search"
+        onFinish={handleSearch}
+        initialValues={{
+          name: '',
+          status: '',
+        }}
+      >
+        <Form.Item
+          name="name"
+          style={{
+            width: '65%',
+          }}
+        >
+          <Input
+            className="input__name"
+            size="large"
+            placeholder="Which character are you searching?"
+          />
+        </Form.Item>
 
-        <Select
-          defaultValue=""
-          size="large"
-          className="select"
+        <Form.Item
+          name="status"
           style={{
             width: '25%',
           }}
-          onChange={(value) => setStatus(value)}
         >
-          <Option value=""> Todos </Option>
-          <Option value="Alive">Alive</Option>
-          <Option value="Dead">Dead</Option>
-          <Option value="unknown">unknown</Option>
-        </Select>
+          <Select size="large" className="select">
+            <Option value=""> Todos </Option>
+            <Option value="Alive">Alive</Option>
+            <Option value="Dead">Dead</Option>
+            <Option value="unknown">unknown</Option>
+          </Select>
+        </Form.Item>
 
         <Button
           style={{
@@ -71,11 +86,11 @@ const CharacterSearch: React.FC<Props> = ({ onSearch }) => {
           }}
           type="primary"
           size="large"
-          onClick={handleSearch}
+          htmlType="submit"
         >
           Search
         </Button>
-      </Input.Group>
+      </Form>
     </div>
   );
 };

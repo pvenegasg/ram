@@ -1,8 +1,18 @@
 #character-search {
   padding-bottom: 1rem;
 
+  .form {
+    display: flex;
+  }
+
+  .input__name {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
   .select {
-    position: relative;
-    bottom: 1px;
+    .ant-select-selector {
+      border-radius: 0px;
+    }
   }
 }
