@@ -4,7 +4,9 @@
   "description": "A Rick and Morty frontend build with React",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "docker:build": "docker build -f ./docker/local/local.Dockerfile -t ram:latest .",
+    "docker:dev": "docker run --rm -p 8080:8080 -v $(pwd)/src:/app/src --name ram ram:latest",
     "dev": "webpack serve",
     "test": "jest"
   },
@@ -31,8 +33,8 @@
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
-    "axios": "^0.21.0",
     "babel-loader": "^8.2.2",
+    "cross-env": "^7.0.2",
     "css-loader": "^5.0.1",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
@@ -41,12 +43,11 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.0",
     "jest": "^26.6.3",
+    "mini-css-extract-plugin": "^1.3.1",
     "node-sass": "^5.0.0",
     "postcss-loader": "^4.1.0",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.2.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
     "typescript": "^4.1.2",
@@ -57,7 +58,10 @@
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
     "@testing-library/jest-dom": "^5.11.6",
-    "antd": "^4.8.6"
+    "antd": "^4.8.6",
+    "axios": "^0.21.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "jest": {
     "setupFilesAfterEnv": [

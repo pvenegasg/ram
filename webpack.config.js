@@ -1,5 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const NODE_ENV = process.env.NODE_ENV;
 
 module.exports = {
   mode: 'development',
@@ -7,7 +10,7 @@ module.exports = {
   entry: './src/index.tsx',
 
   output: {
-    filename: 'dist.js',
+    filename: '[name]-[fullhash].bundle.js',
     path: path.join(__dirname, 'dist'),
   },
 
@@ -29,7 +32,14 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [
+          NODE_ENV === 'production'
+            ? MiniCssExtractPlugin.loader
+            : 'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -53,9 +63,20 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
 
+  externals:
+    NODE_ENV === 'production' ? ['react', 'react-dom', 'axios', 'antd'] : [],
+
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name]-[fullhash].styles.css',
+      chunkFilename: '[id]-[fullhash].styles.css',
+    }),
+
     new HtmlWebpackPlugin({
-      template: './src/index.template.html',
+      template:
+        NODE_ENV === 'production'
+          ? './src/index.prod.template.html'
+          : './src/index.dev.template.html',
     }),
   ],
 };
