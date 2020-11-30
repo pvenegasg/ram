@@ -28,7 +28,7 @@ const CharactersPage: React.FC = () => {
       >
         <h1> Rick and Morty!</h1>
 
-        <CharacterSearch onSearch={setLoading} />
+        <CharacterSearch onSearch={setLoading} loading={loading} />
         <CharacterMatrix loading={loading} />
       </CharacterContext.Provider>
     </div>

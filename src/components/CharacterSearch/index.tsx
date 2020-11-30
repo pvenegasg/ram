@@ -10,33 +10,41 @@ const { Option } = Select;
 
 type Props = {
   onSearch: (value: boolean) => void;
+  loading: boolean;
 };
 
-const CharacterSearch: React.FC<Props> = ({ onSearch }) => {
+const CharacterSearch: React.FC<Props> = ({ onSearch, loading }) => {
   const [form] = useForm();
 
   const { setCharacters, setPages } = useContext(CharacterContext);
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     onSearch(true);
 
-    try {
-      const { name, status } = form.getFieldsValue();
-      const response = await charactersAPI.getByParameters({
-        name,
-        status,
-      });
+    setTimeout(() => {
+      // For demo purpouses
+      const execute = async () => {
+        try {
+          const { name, status } = form.getFieldsValue();
+          const response = await charactersAPI.getByParameters({
+            name,
+            status,
+          });
 
-      const { next, prev } = response.info;
+          const { next, prev } = response.info;
 
-      setPages({ next, prev });
-      setCharacters(response.results);
-    } catch (err) {
-      setCharacters([]);
-      setPages({ next: null, prev: null });
-    }
+          setPages({ next, prev });
+          setCharacters(response.results);
+        } catch (err) {
+          setCharacters([]);
+          setPages({ next: null, prev: null });
+        }
 
-    onSearch(false);
+        onSearch(false);
+      };
+
+      execute();
+    }, 1200);
   };
 
   return (
@@ -88,7 +96,7 @@ const CharacterSearch: React.FC<Props> = ({ onSearch }) => {
           size="large"
           htmlType="submit"
         >
-          Search
+          {loading ? '...' : 'Search'}
         </Button>
       </Form>
     </div>
