@@ -7,24 +7,34 @@ import './styles.scss';
 
 const { Option } = Select;
 
-const CharacterSearch: React.FC = () => {
-  const { setCharacters, setPages, setMode } = useContext(CharacterContext);
+type Props = {
+  onSearch: (value: boolean) => void;
+};
+
+const CharacterSearch: React.FC<Props> = ({ onSearch }) => {
+  const { setCharacters, setPages } = useContext(CharacterContext);
   const [name, setName] = useState('');
   const [status, setStatus] = useState('');
 
-  const handleSearch = () => {
-    charactersAPI
-      .getByParameters({
+  const handleSearch = async () => {
+    onSearch(true);
+
+    try {
+      const response = await charactersAPI.getByParameters({
         name,
         status,
-      })
-      .then((result) => {
-        const { next, prev } = result.info;
-
-        setCharacters(result.results);
-        setPages({ next, prev });
-        setMode('search');
       });
+
+      const { next, prev } = response.info;
+
+      setPages({ next, prev });
+      setCharacters(response.results);
+    } catch (err) {
+      setCharacters([]);
+      setPages({ next: null, prev: null });
+    }
+
+    onSearch(false);
   };
 
   return (

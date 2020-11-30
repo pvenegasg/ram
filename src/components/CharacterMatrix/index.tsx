@@ -11,8 +11,12 @@ import './styles.scss';
 const CHARS_PER_PAGE = 9;
 const MAX_CHARS_FROM_API = 20;
 
-const CharacterMatrix: React.FC = () => {
-  const { characters, setCharacters, setPages, pages, mode } = useContext(
+type Props = {
+  loading: boolean;
+};
+
+const CharacterMatrix: React.FC<Props> = ({ loading }) => {
+  const { characters, setCharacters, setPages, pages } = useContext(
     CharacterContext
   );
 
@@ -47,19 +51,23 @@ const CharacterMatrix: React.FC = () => {
 
   // Reset pagination
   useEffect(() => {
-    setPosition(0);
-    setAPIPage(1);
-  }, [mode]);
+    if (loading === false) {
+      setPosition(0);
+      setAPIPage(1);
+    }
+  }, [loading]);
 
   // Triggers fetch
   useEffect(() => {
     if (apiPage * MAX_CHARS_FROM_API - position < 9) {
       setAPIPage(apiPage + 1);
+      fetchCharacters();
     }
   }, [position]);
 
-  useEffect(fetchCharacters, [apiPage]);
+  useEffect(fetchCharacters, []);
 
+  // Paginate
   const charactersToDisplay = characters.slice(
     position,
     position + CHARS_PER_PAGE

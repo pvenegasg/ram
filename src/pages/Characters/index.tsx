@@ -9,11 +9,12 @@ import { Character } from '../../types';
 
 const CharactersPage: React.FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
-  const [mode, setMode] = useState('default');
   const [pages, setPages] = useState<Pages>({
     next: null,
     prev: null,
   });
+
+  const [loading, setLoading] = useState(false);
 
   return (
     <div id="characters__wrapper">
@@ -23,14 +24,12 @@ const CharactersPage: React.FC = () => {
           setCharacters,
           pages,
           setPages,
-          setMode,
-          mode,
         }}
       >
         <h1> Rick and Morty!</h1>
 
-        <CharacterSearch />
-        <CharacterMatrix />
+        <CharacterSearch onSearch={setLoading} />
+        <CharacterMatrix loading={loading} />
       </CharacterContext.Provider>
     </div>
   );
