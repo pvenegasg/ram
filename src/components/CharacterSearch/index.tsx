@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { Form, Button, Input, Select } from 'antd';
 import CharacterContext from '../../pages/Characters/Context';
 import { charactersAPI } from '../../api';
@@ -9,7 +9,7 @@ import { useForm } from 'antd/lib/form/Form';
 const { Option } = Select;
 
 type Props = {
-  onSearch: (value: boolean) => void;
+  onSearch: Dispatch<SetStateAction<boolean>>;
   loading: boolean;
 };
 

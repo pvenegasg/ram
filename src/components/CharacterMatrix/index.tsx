@@ -36,11 +36,26 @@ const CharacterMatrix: React.FC<Props> = ({ loading }) => {
   };
 
   const nextPage = () => {
-    setPosition(position + CHARS_PER_PAGE);
+    if (loading) {
+      return;
+    }
+
+    if (
+      pages.next === null &&
+      position * CHARS_PER_PAGE + 9 >= characters.length
+    ) {
+      return;
+    }
+
+    setPosition(position + 1);
   };
 
   const previousPage = () => {
-    const prevPosition = position - CHARS_PER_PAGE;
+    if (loading) {
+      return;
+    }
+
+    const prevPosition = position - 1;
 
     if (prevPosition < 0) {
       return;
@@ -59,7 +74,10 @@ const CharacterMatrix: React.FC<Props> = ({ loading }) => {
 
   // Triggers fetch
   useEffect(() => {
-    if (apiPage * MAX_CHARS_FROM_API - position < 9) {
+    if (
+      apiPage * MAX_CHARS_FROM_API - position * CHARS_PER_PAGE <
+      CHARS_PER_PAGE
+    ) {
       setAPIPage(apiPage + 1);
       fetchCharacters();
     }
@@ -69,8 +87,8 @@ const CharacterMatrix: React.FC<Props> = ({ loading }) => {
 
   // Paginate
   const charactersToDisplay = characters.slice(
-    position,
-    position + CHARS_PER_PAGE
+    position * CHARS_PER_PAGE,
+    position * CHARS_PER_PAGE + CHARS_PER_PAGE
   );
 
   return (
