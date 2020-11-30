@@ -8,7 +8,8 @@
     "docker:build": "docker build -f ./docker/local/local.Dockerfile -t ram:latest .",
     "docker:dev": "docker run --rm -p 8080:8080 -v $(pwd)/src:/app/src --name ram ram:latest",
     "dev": "webpack serve",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -69,7 +70,13 @@
     ],
     "testPathIgnorePatterns": [
       "node_modules",
-      "setup.test.js"
-    ]
+      "setup.test.js",
+      "style.mock.js",
+      "file.mock.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png)$": "<rootDir>/__tests__/__mocks__/file.mock.js",
+      "\\.(css|less|scss)$": "<rootDir>/__tests__/__mocks__/style.mock.js"
+    }
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import CharacterCard from '../../src/components/CharacterCard';
-
 import { render, screen } from '@testing-library/react';
+
+import CharacterCard from '../../src/components/CharacterCard';
 
 describe('CharacterCard', () => {
   it('it should render the card', () => {
@@ -31,10 +31,15 @@ describe('CharacterCard', () => {
       },
     };
 
-    render(<CharacterCard {...props} />);
+    const { container } = render(<CharacterCard {...props} />);
 
     expect(screen.getByText('Rick Sanchez')).toBeDefined();
     expect(screen.getByText('Human')).toBeDefined();
     expect(screen.getByText('Alive')).toBeDefined();
+    expect(screen.getByText('Alive')).toHaveClass('status--alive');
+
+    expect(container.querySelector('img').getAttribute('src')).toEqual(
+      'https://rickandmortyapi.com/api/character/avatar/1.jpeg'
+    );
   });
 });

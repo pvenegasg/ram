@@ -26,7 +26,7 @@ const CharacterCard: React.FC<Props> = ({ data }) => {
 
   return (
     <div id="character-card">
-      <Card role="img" cover={<img role="" src={data.image}></img>}>
+      <Card role="img" cover={<img src={data.image}></img>}>
         <h3> {data.name} </h3>
         <span> {data.species} </span>
         <i className={statusClass}>{data.status}</i>

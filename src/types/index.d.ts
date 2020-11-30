@@ -5,7 +5,7 @@ export interface LooseObject {
 export interface Character {
   id: number;
   name: string;
-  status: 'Alive' | 'Dead' | 'unknown';
+  status: string;
   species: string;
   type: string;
   gender: string;
